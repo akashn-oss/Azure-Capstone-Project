@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Secure Cloud File Upload</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+.container{
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    width:400px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1{
+    margin-bottom:10px;
+    color:#333;
+}
+
+p{
+    color:#666;
+    margin-bottom:30px;
+}
+
+input[type="file"]{
+    margin-bottom:20px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#0078D4;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#005ea6;
+}
+
+.status{
+    margin-top:20px;
+    font-weight:500;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cloud File Upload</h1>
+<p>Securely upload files to Azure Blob Storage</p>
+
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Upload File</button>
+
+<div class="status" id="status"></div>
+
+</div>
+
+<script>
+
+async function uploadFile(){
+
+const file = document.getElementById("fileInput").files[0];
+
+if(!file){
+    alert("Please select a file");
+    return;
+}
+
+const sasUrl = "sv=2024-11-04&ss=bfqt&srt=co&sp=rwdlcutfx&se=2026-03-09T21:11:42Z&st=2026-03-09T12:56:42Z&spr=https&sig=2x8Sji7DBzGm6tNwXOvEpEWkkwOvT4iRlfybdCdK1Io%3DE";
+
+const blobUrl = sasUrl.split("?")[0] + "/" + file.name + "?" + sasUrl.split("?")[1];
+
+const response = await fetch(blobUrl,{
+    method:"PUT",
+    headers:{
+        "x-ms-blob-type":"BlockBlob"
+    },
+    body:file
+});
+
+if(response.ok){
+    document.getElementById("status").innerHTML="Upload Successful ✅";
+}else{
+    document.getElementById("status").innerHTML="Upload Failed ❌";
+}
+
+}
+
+</script>
+
+</body>
+</html>
