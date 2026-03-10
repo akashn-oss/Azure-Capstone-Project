@@ -12,19 +12,19 @@ The goal of this project is to demonstrate practical understanding of cloud infr
   
 # Architecture  
 
-User  
-│  
-▼  
-Azure Static Web App  
-(Web Upload Interface)  
-│  
-▼  
-Azure Blob Storage  
-(File Storage Container)  
-│  
-▼  
-Admin Virtual Machine  
-(Security Monitoring Node)
+                   User  
+                    │  
+                    ▼  
+            Azure Static Web App  
+           (Web Upload Interface)  
+                    │  
+                    ▼  
+            Azure Blob Storage  
+          (File Storage Container)  
+                    │  
+                    ▼  
+          Admin Virtual Machine  
+        (Security Monitoring Node)
 
   
 ### Architecture Explanation  
@@ -35,7 +35,7 @@ Users access the web application through a browser and upload files.
   
 **Azure Static Web App**  
   
-Hosts the frontend interface used to upload files. This is a Platform-as-a-Service (PaaS) offering that automatically handles deployment and hosting of the web application.  
+Hosts the frontend interface for uploading files. This is a Platform-as-a-Service (PaaS) offering that automatically handles deployment and hosting of the web application.  
   
 **Azure Blob Storage**  
   
@@ -74,8 +74,7 @@ Steps:
 2. Navigate to **Resource Groups**  
 3. Click **Create**  
 4. Provide a name and select a region  
-5. Deploy the resource group  
-  
+5. Deploy the resource group
 ---  
   
 # Step 2: Create Azure Storage Account  
@@ -90,7 +89,6 @@ Redundancy: Locally Redundant Storage (LRS)
 Secure Transfer: Enabled  
 Access Tier: Hot  
 Region: Korea Central
-
   
 Steps:  
   
@@ -99,7 +97,10 @@ Steps:
 3. Select the resource group  
 4. Configure the storage settings  
 5. Deploy the storage account  
-  
+
+<img width="1907" height="1005" alt="image" src="https://github.com/user-attachments/assets/ebf46abd-d0ed-4cce-a738-368f0837a474" />
+
+
 ---  
   
 # Step 3: Create Blob Storage Container  
@@ -123,7 +124,9 @@ Steps:
 3. Click **Create Container**  
 4. Enter the container name  
 5. Set access level to private  
-  
+
+  <img width="1907" height="963" alt="Screenshot 2026-03-10 154530" src="https://github.com/user-attachments/assets/35d266a0-e338-4e5e-82ac-6db2ceb071c6" />
+
 ---  
   
 # Step 4: Configure CORS  
@@ -145,7 +148,9 @@ Steps:
 2. Navigate to **Resource Sharing (CORS)**  
 3. Add the CORS rule  
 4. Save configuration  
-  
+
+  <img width="1504" height="481" alt="image" src="https://github.com/user-attachments/assets/0b225228-08f5-435d-a471-b134ce7cfcb1" />
+
 ---  
   
 # Step 5: Generate Shared Access Signature (SAS)  
@@ -169,7 +174,9 @@ Steps:
 5. Generate SAS token and URL  
   
 The SAS token is appended to the blob service URL and used by the frontend application for uploading files.  
-  
+
+  <img width="1299" height="925" alt="Screenshot 2026-03-09 200712" src="https://github.com/user-attachments/assets/8533152d-a7a4-4e91-9350-96b10a33aa79" />
+
 ---  
   
 # Step 6: Build Web Upload Interface  
@@ -195,6 +202,8 @@ const response = await fetch(blobUrl, {
 
 The file is uploaded directly from the browser to Azure Blob Storage using the SAS URL.
 
+<img width="1836" height="1046" alt="image" src="https://github.com/user-attachments/assets/23dbc948-f1d7-413c-ae04-eb6fa0f5ee5f" />
+
 ---
 
 # Step 7: Deploy Static Web App
@@ -218,6 +227,11 @@ Deployment process:
 
 Azure automatically builds and hosts the application.
 
+<img width="489" height="425" alt="Screenshot 2026-03-09 190234" src="https://github.com/user-attachments/assets/a801eeb0-af31-444a-ad0c-6effa2796515" />
+
+
+<img width="1028" height="992" alt="Screenshot 2026-03-09 185924" src="https://github.com/user-attachments/assets/318b5475-d8e3-4017-95af-3527e108c85e" />
+
 ---
 
 # Step 8: Verify File Upload
@@ -227,6 +241,8 @@ User can select a file from their system and upload it using the web interface.
 If the upload succeeds, the file appears in the **uploads container** inside the storage account.
 
 User receive a status message indicating whether the upload succeeded or failed.
+
+<img width="1907" height="1040" alt="Screenshot 2026-03-10 160704" src="https://github.com/user-attachments/assets/7face13c-eddb-4bd0-9db0-cf421c38f23a" />
 
 ---
 
@@ -253,6 +269,7 @@ Steps:
     
 5. Deploy VM
     
+<img width="1851" height="833" alt="Screenshot 2026-03-10 194139" src="https://github.com/user-attachments/assets/53ebc1cb-cdbd-4c43-8607-81017ccfe1fa" />
 
 ---
 
@@ -260,6 +277,7 @@ Steps:
 
 The VM can be accessed using Basiton.
 
+<img width="1113" height="614" alt="Screenshot 2026-03-10 093417" src="https://github.com/user-attachments/assets/02ddcf8d-2704-455a-8d4e-7ea26a8715c8" />
 
 
 ---
@@ -301,6 +319,8 @@ Steps:
 
 This allows the VM to read, write, and manage blobs.
 
+<img width="1650" height="936" alt="Screenshot 2026-03-10 194443" src="https://github.com/user-attachments/assets/3a764255-c2a9-4508-a74f-a39e6d6620e4" />
+
 ---
 
 # Step 13: Monitor Uploaded Files from VM
@@ -309,28 +329,22 @@ Using Azure CLI, the VM can list and manage uploaded files.
 
 List blobs:
 
-az storage blob list \  
---account-name capstoneblobproject \  
---container-name uploads \  
---auth-mode login \  
---output table
+az storage blob list --account-name capstoneblobproject  --container-name uploads --auth-mode login --output table
 
 Download blob:
 
-az storage blob download \  
---account-name capstoneblobproject \  
---container-name uploads \  
---name filename.pdf \  
---file filename.pdf
+az storage blob download  --account-name capstoneblobproject  --container-name uploads --name filename.pdf --file filename.pdf
 
 Delete blob:
-
-az storage blob delete \  
---account-name capstoneblobproject \  
---container-name uploads \  
---name filename.pdf
+az storage blob delete --account-name capstoneblobproject  --container-name uploads --name filename.pdf
 
 This allows administrators to monitor and manage stored files.
+
+<img width="1895" height="450" alt="Screenshot 2026-03-10 162239" src="https://github.com/user-attachments/assets/c918ca3c-1610-47c1-8831-4e0aadcd2b77" />
+<br>
+<img width="841" height="835" alt="Screenshot 2026-03-10 162423" src="https://github.com/user-attachments/assets/8e0b74dc-85f4-4240-bf6f-2eb4e9eef50a" />
+<br>
+<img width="1890" height="192" alt="Screenshot 2026-03-10 162613" src="https://github.com/user-attachments/assets/1116eb0b-417b-4049-a23a-3214fc89d04e" />
 
 ---
 
@@ -352,7 +366,7 @@ Security mechanisms implemented:
 
 - Private blob container
     
-- SAS token based upload access
+- SAS token-based upload access
     
 - HTTPS-only communication
     
