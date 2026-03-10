@@ -244,6 +244,7 @@ User receive a status message indicating whether the upload succeeded or failed.
 
 <img width="1907" height="1040" alt="Screenshot 2026-03-10 160704" src="https://github.com/user-attachments/assets/7face13c-eddb-4bd0-9db0-cf421c38f23a" />
 
+Link:https://orange-glacier-0960c7b00.1.azurestaticapps.net/
 ---
 
 # Step 9: Create Admin Virtual Machine
