@@ -96,6 +96,7 @@ if(!file){
 const sasUrl = "https://capstoneblobproject.blob.core.windows.net/uploads?sp=r&st=2026-03-10T10:00:40Z&se=2026-03-10T18:15:40Z&spr=https&sv=2024-11-04&sr=c&sig=hqpzG2DBAbuW1zLTZbU10cs%2FLJg%2FB0DcobEAgLcpkFw%3D";
 
 
+
 const blobUrl = sasUrl.split("?")[0] + "/" + file.name + "?" + sasUrl.split("?")[1];
 
 const response = await fetch(blobUrl,{
